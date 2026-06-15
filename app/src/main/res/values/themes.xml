@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark, no action bar. Compose drives the real colors; this just sets the window
+         background so there is no white flash before the first frame on Portal. -->
+    <style name="Theme.Aura" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/aura_background</item>
+        <item name="android:statusBarColor">@color/aura_background</item>
+        <item name="android:navigationBarColor">@color/aura_background</item>
+    </style>
+</resources>
