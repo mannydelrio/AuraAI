@@ -121,7 +121,7 @@ private fun HomeScreen(onOpenSettings: () -> Unit) {
       modifier = Modifier.fillMaxSize().portalPadding().verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
-    Text("Aura", style = MaterialTheme.typography.headlineSmall)
+    Text("AuraAI", style = MaterialTheme.typography.headlineSmall)
     Text(
         "Your always-on AI assistant, over everything.",
         style = MaterialTheme.typography.bodyLarge,
@@ -175,7 +175,7 @@ private fun HomeScreen(onOpenSettings: () -> Unit) {
       Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Display over other apps", style = MaterialTheme.typography.titleMedium)
         Text(
-            if (canOverlay) "Granted ✓" else "Required so Aura can float over other apps.",
+            if (canOverlay) "Granted ✓" else "Required so AuraAI can float over other apps.",
             style = MaterialTheme.typography.bodyMedium,
         )
         if (!canOverlay) {
@@ -200,7 +200,7 @@ private fun HomeScreen(onOpenSettings: () -> Unit) {
           },
           enabled = canOverlay,
       ) {
-        Text("Start Aura")
+        Text("Start AuraAI")
       }
       OutlinedButton(onClick = {
         context.stopService(Intent(context, OverlayService::class.java))

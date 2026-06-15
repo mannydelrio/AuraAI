@@ -1,4 +1,4 @@
-# Aura
+# AuraAI
 
 **An always-on, voice-driven AI assistant for Meta Portal** — a self-hosted alternative to
 Google Assistant / Siri / Alexa that floats over every app.

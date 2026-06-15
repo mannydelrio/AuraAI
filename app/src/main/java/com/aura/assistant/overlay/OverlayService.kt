@@ -203,7 +203,7 @@ class OverlayService : Service() {
         contentAlignment = Alignment.Center,
     ) {
       Text(
-          text = "Aura",
+          text = "AuraAI",
           color = Color(0xFFF0F0F0),
           fontWeight = FontWeight.Bold,
           style = MaterialTheme.typography.labelMedium,
@@ -225,7 +225,7 @@ class OverlayService : Service() {
     ) {
       Column(modifier = Modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-          Text("Aura", style = MaterialTheme.typography.titleMedium)
+          Text("AuraAI", style = MaterialTheme.typography.titleMedium)
           Spacer(Modifier.width(8.dp))
           Text(stateLabel(AssistantSession.listeningState),
               style = MaterialTheme.typography.bodySmall,

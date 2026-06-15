@@ -285,7 +285,7 @@ class VoiceService : Service() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       val mgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
       mgr.createNotificationChannel(
-          NotificationChannel(CHANNEL_ID, "Aura Listening", NotificationManager.IMPORTANCE_LOW))
+          NotificationChannel(CHANNEL_ID, "AuraAI Listening", NotificationManager.IMPORTANCE_LOW))
     }
     return NotificationCompat.Builder(this, CHANNEL_ID)
         .setContentTitle(getString(R.string.listen_notification_title))

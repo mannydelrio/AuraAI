@@ -71,7 +71,7 @@ class AlarmService : Service() {
       val mgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
       // No channel sound — we play (and can stop) the tone ourselves.
       val channel =
-          NotificationChannel(CHANNEL_ID, "Aura Alarms", NotificationManager.IMPORTANCE_HIGH).apply {
+          NotificationChannel(CHANNEL_ID, "AuraAI Alarms", NotificationManager.IMPORTANCE_HIGH).apply {
             setSound(null, null)
             enableVibration(true)
           }

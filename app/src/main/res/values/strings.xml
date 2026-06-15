@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aura</string>
+    <string name="app_name">AuraAI</string>
 
     <!-- Foreground service notification -->
-    <string name="overlay_channel_name">Aura Assistant</string>
-    <string name="overlay_notification_title">Aura is active</string>
+    <string name="overlay_channel_name">AuraAI Assistant</string>
+    <string name="overlay_notification_title">AuraAI is active</string>
     <string name="overlay_notification_text">Tap the bubble to talk to your assistant</string>
-    <string name="listen_notification_title">Aura is listening</string>
+    <string name="listen_notification_title">AuraAI is listening</string>
     <string name="listen_notification_text">Microphone active for voice commands</string>
 </resources>
