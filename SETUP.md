@@ -11,11 +11,9 @@ up once from a computer over USB (a small script does it all). After that, every
 
 ## What you need
 - A **Meta Portal** (touch model) and its **USB-C data cable**
-- A **Windows or Mac/Linux computer**
-- **Android platform-tools (adb)** — download: https://developer.android.com/tools/releases/platform-tools
-- The **Aura APK** (`app-debug.apk`) + the setup script (`setup.ps1` for Windows, `setup.sh` for Mac/Linux)
-- An **AI provider API key** — an **OpenAI** key is recommended (it powers the brain *and* the voice).
-  Get one at https://platform.openai.com/api-keys (add ~$5 of credit; this is separate from ChatGPT Plus/Pro).
+- A **Windows or Mac computer** (the installer downloads `adb` for you — nothing to pre-install)
+- An **OpenAI API key** — get one at https://platform.openai.com/api-keys (add ~$5 of credit;
+  this is separate from ChatGPT Plus/Pro). It powers both the brain and the voice.
 
 ---
 
@@ -25,21 +23,19 @@ Plug the Portal into your computer with the USB-C cable, and **tap "Allow"** on 
 
 > Portal Go: pop off the rubber cover to reach the USB-C port.
 
-## Step 2 — Run the setup script
-Put `app-debug.apk` and the setup script in the same folder, then:
+## Step 2 — Run the installer (it downloads everything for you)
+From the [latest release](../../releases/latest):
 
-**Windows** (PowerShell):
-```powershell
-powershell -ExecutionPolicy Bypass -File setup.ps1
-```
+- **Windows:** download **`Install-AuraAI.bat`** and **double-click it**.
+- **Mac:** download **`install.command`**, then double-click it (if macOS blocks it the first
+  time, right-click it → **Open** → **Open**).
 
-**Mac / Linux**:
-```bash
-bash setup.sh
-```
+That's it — the installer auto-downloads `adb` and the AuraAI app, installs it, and configures
+everything: display-over-apps, microphone, the **assistant role** (so voice works over other apps),
+and turns off the **screensaver** so the assistant stays on screen (all Portal generations).
 
-This installs Aura and configures: display-over-apps permission, microphone, the **assistant role**
-(so voice works while other apps are open), and keeps the screen on (no Superframe screensaver).
+> Prefer to do it manually? `setup.ps1` / `setup.sh` are also on the release if you already have
+> `adb` and the APK locally.
 
 ## Step 3 — Personalize in the app
 On the Portal, open **Aura → Settings**:

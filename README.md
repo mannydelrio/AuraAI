@@ -20,10 +20,14 @@ weather, timers, alarms, reminders, web lookups, and **smart-home control via Ho
 - 🖥️ Keeps the Portal screen on and **survives app-switches** (it registers as the device assistant)
 
 ## Install (on a Meta Portal)
-See **[SETUP.md](SETUP.md)**. In short: enable ADB on the Portal, then run `setup.ps1` (Windows)
-or `setup.sh` (Mac/Linux) from the folder with the APK. Grab the signed APK from the
-[Releases](../../releases) page. Afterward, open Aura → Settings and enter your own AI key
-(and optionally Home Assistant + a default location).
+1. On the Portal: **Settings → Debug → "ADB Enabled"**, connect it to your computer via USB-C, tap **Allow**.
+2. From the **[latest release](../../releases/latest)**, download **`Install-AuraAI.bat`** (Windows) or
+   **`install.command`** (Mac) and **double-click** it. It auto-downloads `adb` + the app and configures
+   everything (permissions, assistant role, screensaver off).
+3. On the Portal, open **AuraAI → Settings**, choose **OpenAI** and paste your API key (and optionally a
+   default location + your Home Assistant URL/token). Tap **Start AuraAI** and **Start listening**.
+
+Full guide & troubleshooting: **[SETUP.md](SETUP.md)**.
 
 ## Build from source
 Requires JDK 17 + Android SDK (compileSdk 36). Targets `minSdk 28 / targetSdk 29` for Portal.
