@@ -49,13 +49,15 @@
         <!-- Foreground service that owns the floating overlay window -->
         <service
             android:name=".overlay.OverlayService"
-            android:exported="false" />
+            android:exported="false"
+            android:stopWithTask="false" />
 
         <!-- Foreground service for continuous microphone capture -->
         <service
             android:name=".voice.VoiceService"
             android:exported="false"
-            android:foregroundServiceType="microphone" />
+            android:foregroundServiceType="microphone"
+            android:stopWithTask="false" />
 
         <!-- Re-launch the assistant after device reboot -->
         <receiver

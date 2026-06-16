@@ -69,8 +69,11 @@ To silence a ringing alarm: tap **Stop** on the notification, or say **"Hey Aura
   setup script, or run:
   `adb shell settings put secure voice_interaction_service com.aura.assistant/.assist.AuraInteractionService`
 - **Voice does nothing at all:** the Portal **mic is muted** (mic-slash icon up top) — unmute it.
-- **The bubble disappears:** open Aura once; it auto-starts and stays above apps. Enable
-  "Start automatically after reboot" in Settings to survive restarts.
+- **The bubble disappears at the launcher / when the screensaver kicks in** (more common on
+  **Gen 1** Portals): the app self-heals (it re-attaches the bubble automatically), but the
+  **Superframe screensaver renders above all overlays**, so it must be *disabled*, not covered.
+  Re-run the setup script — it turns the screensaver off and keeps the screen on. Also enable
+  "Start automatically after reboot" in Settings.
 - **Smart-home commands fail:** check the HA URL/token in Settings, and that the Portal is on the same
   Wi-Fi as Home Assistant.
 - **Screen turns off / shows photos again:** a Portal update may have reset the settings — re-run the

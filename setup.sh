@@ -40,11 +40,15 @@ echo "Setting Aura as the device assistant..."
 adb shell settings put secure voice_interaction_service "$ASSISTANT"
 adb shell settings put secure assistant "$ASSISTANT"
 
+# A system screensaver ("dream") draws ABOVE app overlays, so it must be disabled, not covered.
 echo "Keeping the screen on (disabling screensaver)..."
 adb shell settings put secure screensaver_enabled 0
 adb shell settings put secure screensaver_activate_on_sleep 0
 adb shell settings put secure screensaver_activate_on_dock 0
+adb shell settings delete secure screensaver_components
+adb shell settings delete secure screensaver_default_component
 adb shell settings put system screen_off_timeout 2147483647
+adb shell settings put global stay_on_while_plugged_in 7
 
 adb shell am start -n "$PKG/.MainActivity" >/dev/null
 

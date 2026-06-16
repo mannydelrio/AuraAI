@@ -53,12 +53,18 @@ Write-Host "Setting Aura as the device assistant..." -ForegroundColor Cyan
 & $adb shell settings put secure voice_interaction_service $assistant
 & $adb shell settings put secure assistant $assistant
 
-# --- keep the screen on, no Superframe screensaver ---
+# --- keep the screen on, no Superframe screensaver (all Portal generations) ---
+# A system screensaver ("dream") draws ABOVE app overlays, so it can't be covered — it must
+# be disabled, not drawn over. We turn it off, unregister its component, and stop the screen
+# from ever idling into it.
 Write-Host "Keeping the screen on (disabling screensaver)..." -ForegroundColor Cyan
 & $adb shell settings put secure screensaver_enabled 0
 & $adb shell settings put secure screensaver_activate_on_sleep 0
 & $adb shell settings put secure screensaver_activate_on_dock 0
+& $adb shell settings delete secure screensaver_components
+& $adb shell settings delete secure screensaver_default_component
 & $adb shell settings put system screen_off_timeout 2147483647
+& $adb shell settings put global stay_on_while_plugged_in 7
 
 # --- launch ---
 & $adb shell am start -n "$pkg/.MainActivity" | Out-Null

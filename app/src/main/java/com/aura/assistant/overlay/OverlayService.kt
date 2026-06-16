@@ -12,11 +12,15 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.PixelFormat
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
@@ -79,12 +83,39 @@ class OverlayService : Service() {
 
   private var expanded by mutableStateOf(false)
 
+  private val handler = Handler(Looper.getMainLooper())
+
+  // Re-checks every few seconds that the bubble is still attached, re-adding it if the
+  // window got dropped (low-RAM kill on Gen 1 Portals, launcher transitions, etc.).
+  private val watchdog =
+      object : Runnable {
+        override fun run() {
+          ensureOverlay()
+          handler.postDelayed(this, WATCHDOG_MS)
+        }
+      }
+
+  // The Superframe screensaver is a system "dream" that draws above any app overlay, so the
+  // bubble can't show during it. The moment it ends (or the screen turns on / the user
+  // returns) we re-assert the bubble so it's back instantly.
+  private val systemReceiver =
+      object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) = ensureOverlay()
+      }
+
   override fun onBind(intent: Intent?): IBinder? = null
 
   override fun onCreate() {
     super.onCreate()
     windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
     lifecycleOwner.onCreate()
+    val filter =
+        IntentFilter().apply {
+          addAction(Intent.ACTION_SCREEN_ON)
+          addAction(Intent.ACTION_USER_PRESENT)
+          addAction(Intent.ACTION_DREAMING_STOPPED)
+        }
+    runCatching { registerReceiver(systemReceiver, filter) }
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -92,8 +123,24 @@ class OverlayService : Service() {
     // memory when another app opens) — this keeps the bubble above every app, persistently.
     startForeground(NOTIFICATION_ID, buildNotification())
     AssistantSession.refresh()
-    if (overlayView == null) addOverlay()
+    ensureOverlay()
+    handler.removeCallbacks(watchdog)
+    handler.postDelayed(watchdog, WATCHDOG_MS)
     return START_STICKY
+  }
+
+  /** Add the overlay if missing, or re-add it if its window got detached. */
+  private fun ensureOverlay() {
+    val v = overlayView
+    if (v == null) {
+      addOverlay()
+      return
+    }
+    if (!v.isAttachedToWindow) {
+      runCatching { windowManager.removeViewImmediate(v) }
+      overlayView = null
+      addOverlay()
+    }
   }
 
   private fun addOverlay() {
@@ -163,6 +210,8 @@ class OverlayService : Service() {
 
   override fun onDestroy() {
     super.onDestroy()
+    handler.removeCallbacks(watchdog)
+    runCatching { unregisterReceiver(systemReceiver) }
     overlayView?.let { runCatching { windowManager.removeView(it) } }
     overlayView = null
     lifecycleOwner.onDestroy()
@@ -340,5 +389,6 @@ class OverlayService : Service() {
     const val TAG = "OverlayService"
     const val CHANNEL_ID = "aura_overlay"
     const val NOTIFICATION_ID = 1001
+    const val WATCHDOG_MS = 3000L
   }
 }
